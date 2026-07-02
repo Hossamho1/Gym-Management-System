@@ -1,0 +1,189 @@
+﻿@using GymRoute.BusinessLogic.ViewModel.Member
+@using GymRoute.DataAccess.Enum
+@using GymRoute.DataAccess.EnumGender
+
+@model CreateMemberViewModel
+
+<div class="page member-create-page mt-4 mb-5">
+    <header class="mb-4">
+        <a asp-controller="Member" asp-action="Index" class="member-create-back text-decoration-none d-inline-flex align-items-center gap-2 mb-3">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to Members</span>
+        </a>
+        <h2 class="fw-bold mb-1" style="color: var(--primary-color, #070093);">Add Member</h2>
+        <p class="text-muted mb-0">Register a new gym member with personal and health details.</p>
+    </header>
+
+    <div class="card border-0 member-create-card">
+        <div class="card-body p-4 p-lg-5">
+            <form method="post" class="needs-validation member-create-form" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-3" role="alert"></div>
+
+                <div class="member-section-header mb-4">
+                    <div class="icon-box me-3">
+                        <i class="bi bi-person-fill" style="color: var(--primary-color, #070093);"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Personal Details</h5>
+                        <small class="text-muted">Basic contact and identity information</small>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-md-6">
+                        <label asp-for="Name" class="form-label fw-semibold">Full name</label>
+                        <div class="input-group member-input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input asp-for="Name" class="form-control" placeholder="Enter full name" />
+                        </div>
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label asp-for="Email" class="form-label fw-semibold">Email address</label>
+                        <div class="input-group member-input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input asp-for="Email" class="form-control" placeholder="name@example.com" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label asp-for="phone" class="form-label fw-semibold">Phone</label>
+                        <div class="input-group member-input-group">
+                            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                            <input asp-for="phone" class="form-control" placeholder="010xxxxxxxx" />
+                        </div>
+                        <span asp-validation-for="phone" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label asp-for="DateOfBirth" class="form-label fw-semibold">Date of birth</label>
+                        <div class="input-group member-input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            <input asp-for="DateOfBirth" class="form-control" type="date" />
+                        </div>
+                        <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label asp-for="Gender" class="form-label fw-semibold">Gender</label>
+                        <div class="input-group member-input-group">
+                            <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
+                            <select asp-for="Gender" class="form-select" asp-items="Html.GetEnumSelectList<Gender>()">
+                                <option value="">Select gender</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="Gender" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="member-section-header mt-5 mb-4">
+                    <div class="icon-box me-3">
+                        <i class="bi bi-geo-alt-fill" style="color: var(--primary-color, #070093);"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Address</h5>
+                        <small class="text-muted">Member residential location</small>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-md-4">
+                        <label asp-for="BuildingNumber" class="form-label fw-semibold">Building number</label>
+                        <input asp-for="BuildingNumber" class="form-control member-field" placeholder="e.g. 12" />
+                        <span asp-validation-for="BuildingNumber" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="Street" class="form-label fw-semibold">Street</label>
+                        <input asp-for="Street" class="form-control member-field" placeholder="Street name" />
+                        <span asp-validation-for="Street" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="City" class="form-label fw-semibold">City</label>
+                        <input asp-for="City" class="form-control member-field" placeholder="City" />
+                        <span asp-validation-for="City" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="member-section-header mt-5 mb-4">
+                    <div class="icon-box me-3">
+                        <i class="bi bi-heart-pulse-fill" style="color: var(--primary-color, #070093);"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Health Record</h5>
+                        <small class="text-muted">Physical metrics and medical notes</small>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-md-4">
+                        <label asp-for="HealthRecordViewModel.Height" class="form-label fw-semibold">Height (cm)</label>
+                        <div class="input-group member-input-group">
+                            <span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+                            <input asp-for="HealthRecordViewModel.Height" class="form-control" placeholder="170" />
+                        </div>
+                        <span asp-validation-for="HealthRecordViewModel.Height" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="HealthRecordViewModel.Weight" class="form-label fw-semibold">Weight (kg)</label>
+                        <div class="input-group member-input-group">
+                            <span class="input-group-text"><i class="bi bi-speedometer2"></i></span>
+                            <input asp-for="HealthRecordViewModel.Weight" class="form-control" placeholder="70" />
+                        </div>
+                        <span asp-validation-for="HealthRecordViewModel.Weight" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label asp-for="HealthRecordViewModel.BloodType" class="form-label fw-semibold">Blood type</label>
+                        <div class="input-group member-input-group">
+                            <span class="input-group-text"><i class="bi bi-droplet-fill"></i></span>
+                            <select asp-for="HealthRecordViewModel.BloodType" class="form-select" asp-items="Html.GetEnumSelectList<BloodType>()">
+                                <option value="">Select blood type</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="HealthRecordViewModel.BloodType" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="HealthRecordViewModel.Notes" class="form-label fw-semibold">Notes</label>
+                        <textarea asp-for="HealthRecordViewModel.Notes" class="form-control member-field" rows="4" placeholder="Allergies, injuries, or other health notes..."></textarea>
+                        <span asp-validation-for="HealthRecordViewModel.Notes" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mt-5">
+                    <a asp-controller="Member" asp-action="Index" class="explore-more px-4 py-2 text-decoration-none">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn-fill rounded-pill px-4 py-3 fw-medium border-0">
+                        <i class="bi bi-plus-circle me-2"></i> Add Member
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            'use strict';
+
+            var form = document.querySelector('.member-create-form');
+            if (!form) return;
+
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            });
+        })();
+    </script>
+}
