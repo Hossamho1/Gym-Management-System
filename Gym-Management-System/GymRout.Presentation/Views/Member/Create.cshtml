@@ -1,0 +1,157 @@
+﻿@using GymRoute.BusinessLogic.ViewModel.Member
+@using GymRoute.DataAccess.Enum
+@using GymRoute.DataAccess.EnumGender
+
+
+
+@model  CreateMemberViewModel  
+<div class="container">
+    <main role="main" class="pb-3">
+
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h3 class="mb-0 text-dark">Add Member</h3>
+                    <small class="text-muted">Create new gym member</small>
+                </div>
+
+                <form method="post" class="needs-validation" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <ul class="nav nav-pills mb-4" id="addMemberTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="member-tab" data-bs-toggle="pill" data-bs-target="#member-info" type="button" role="tab">Member Info</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="health-tab" data-bs-toggle="pill" data-bs-target="#health-info" type="button" role="tab">Health Data</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="member-info" role="tabpanel" aria-labelledby="member-tab">
+                            <div class="row gy-3">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-floating">
+                                        <input asp-for="Name" class="form-control" id="NameInput" placeholder="Full name" />
+                                        <label for="NameInput">Full name</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-floating">
+                                        <input asp-for="Email" class="form-control" id="EmailInput" placeholder="name@example.com" />
+                                        <label for="EmailInput">Email address</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-floating">
+                                        <input asp-for="phone" class="form-control" id="PhoneInput" placeholder="010xxxxxxxx" />
+                                        <label for="PhoneInput">Phone</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-floating">
+                                        <input asp-for="DateOfBirth" class="form-control" type="date" id="DobInput" placeholder="Date of birth" />
+                                        <label for="DobInput">Date of birth</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label">Gender</label>
+                                    <select asp-for="Gender" class="form-select" asp-items="Html.GetEnumSelectList<Gender>()">
+                                        <option value="">-- Select Gender --</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <hr />
+                                    <h6 class="mb-3 text-secondary">Address</h6>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="BuildingNumber" class="form-control" id="BuildingInput" placeholder="Building" />
+                                        <label for="BuildingInput">Building number</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="Street" class="form-control" id="StreetInput" placeholder="Street" />
+                                        <label for="StreetInput">Street</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="City" class="form-control" id="CityInput" placeholder="City" />
+                                        <label for="CityInput">City</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="health-info" role="tabpanel" aria-labelledby="health-tab">
+                            <div class="row gy-3">
+                                <div class="col-12 col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="HealthRecordViewModel.Height" class="form-control" id="HeightInput" placeholder="Height" />
+                                        <label for="HeightInput">Height (cm)</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-floating">
+                                        <input asp-for="HealthRecordViewModel.Weight" class="form-control" id="WeightInput" placeholder="Weight" />
+                                        <label for="WeightInput">Weight (kg)</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label class="form-label">Blood Type</label>
+                                    <select asp-for="HealthRecordViewModel.BloodType" class="form-select" asp-items="Html.GetEnumSelectList<BloodType>()">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input asp-for="HealthRecordViewModel.Notes" class="form-control" id="NotesInput" placeholder="Notes" />
+                                        <label for="NotesInput">Notes</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <a asp-controller="Member" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i> Back
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-plus-circle me-2"></i> Add Member
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    // Bootstrap form validation
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+
+<script src="../js/jquery.validate.min.js"></script>
+<script src="../js/jquery.validate.unobtrusive.min.js"></script>

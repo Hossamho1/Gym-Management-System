@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="GymRout.Presentation/GymRout.Presentation.csproj" />
+  <Project Path="GymRoute.BusinessLogic/GymRoute.BusinessLogic.csproj" />
+  <Project Path="GymRoute.DataAccess/GymRoute.DataAccess.csproj" />
+</Solution>
