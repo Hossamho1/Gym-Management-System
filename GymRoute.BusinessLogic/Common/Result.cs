@@ -6,6 +6,7 @@ public sealed class Result
     public bool IsFailure => !IsSuccess;
     public string Error { get; }
     public string? Field { get; }
+    public string? ErrorKey { get; set; }
 
     private Result(bool isSuccess, string error, string? field)
     {

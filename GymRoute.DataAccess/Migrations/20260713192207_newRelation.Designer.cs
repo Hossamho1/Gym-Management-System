@@ -4,6 +4,7 @@ using GymRoute.DataAccess.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymRoute.DataAccess.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260713192207_newRelation")]
+    partial class newRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,24 +136,14 @@ namespace GymRoute.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-<<<<<<< HEAD
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("phone")
-=======
-                    b.Property<string>("Phone")
->>>>>>> 61985b0abc4d5d1df5b6be3f9edf2568dd71cc24
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-<<<<<<< HEAD
-=======
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
->>>>>>> 61985b0abc4d5d1df5b6be3f9edf2568dd71cc24
                     b.HasKey("Id");
 
                     b.ToTable("Users", t =>
@@ -360,19 +353,11 @@ namespace GymRoute.DataAccess.Migrations
                     b.Property<DateTime>("JoinDate")
                         .HasColumnType("datetime2");
 
-<<<<<<< HEAD
                     b.Property<string>("photo")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.HasIndex("Email", "phone")
-=======
-                    b.Property<string>("Photo")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasIndex("Email", "Phone")
->>>>>>> 61985b0abc4d5d1df5b6be3f9edf2568dd71cc24
                         .IsUnique();
 
                     b.ToTable(t =>

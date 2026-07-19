@@ -3,8 +3,11 @@ using GymRoute.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GymRoute.DataAccess.Repositories
 {
@@ -19,7 +22,22 @@ namespace GymRoute.DataAccess.Repositories
         => await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
          
         public async Task<IEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
-        =>   await _dbSet.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+        => await _dbSet.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+
+        public async Task<IEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default, params Expression<Func<IEntity, object>>[] includes)
+        {
+            IQueryable<IEntity> query = _dbSet;
+
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+                return await query.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+        }
 
         public async Task<IEntity?> GetByIdIncludingDeletedAsync(int id, CancellationToken cancellationToken = default)
         => await _dbSet.IgnoreQueryFilters().FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
@@ -61,6 +79,11 @@ namespace GymRoute.DataAccess.Repositories
         {
             return _dbContext.SaveChangesAsync(cancellationToken);
 
+        }
+
+        public Task<Member?> GetByIdAsync(int id, CancellationToken cancellationToken = default, params Expression<Func<Member, object>>[] includes)
+        {
+            throw new NotImplementedException();
         }
     }
 }

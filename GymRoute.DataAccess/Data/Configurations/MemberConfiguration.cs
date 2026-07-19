@@ -8,7 +8,7 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
 {
     public  void Configure(EntityTypeBuilder<Member> builder)
     {
-        builder.HasIndex(p => new { p.Email, p.phone })
+        builder.HasIndex(p => new { p.Email, p.Phone })
             .IsUnique();
 
         builder.Property(p => p.photo)

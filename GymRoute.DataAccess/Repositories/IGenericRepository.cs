@@ -9,7 +9,14 @@ namespace GymRoute.DataAccess.Repositories;
 public interface IGenericRepository<TEntity> where TEntity : BaseEntity 
 {
     Task<IReadOnlyList<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<TEntity?> GetByIdAsync(int id,CancellationToken cancellationToken=default);
+
+    Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+
+    // Generic overload that accepts include expressions for navigation properties
+    Task<TEntity?> GetByIdAsync(
+      int id,
+      CancellationToken cancellationToken = default,
+      params Expression<Func<TEntity, object>>[] includes);
 
     Task<TEntity?> GetByIdIncludingDeletedAsync(int id, CancellationToken cancellationToken = default);
 

@@ -48,6 +48,9 @@ namespace GymRoute.DataAccess.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MemberId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
 
@@ -55,6 +58,8 @@ namespace GymRoute.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MemberId1");
 
                     b.HasIndex("SessionId");
 
@@ -350,7 +355,7 @@ namespace GymRoute.DataAccess.Migrations
                     b.Property<DateTime>("JoinDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Photo")
+                    b.Property<string>("photo")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -392,6 +397,10 @@ namespace GymRoute.DataAccess.Migrations
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("GymRoute.DataAccess.Entities.Member", null)
+                        .WithMany("Bookings")
+                        .HasForeignKey("MemberId1");
 
                     b.HasOne("GymRoute.DataAccess.Entities.Session", "Session")
                         .WithMany()
@@ -436,7 +445,8 @@ namespace GymRoute.DataAccess.Migrations
                                 .HasForeignKey("GymUserId");
                         });
 
-                    b.Navigation("Address");
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GymRoute.DataAccess.Entities.HealthRecord", b =>
@@ -453,7 +463,7 @@ namespace GymRoute.DataAccess.Migrations
             modelBuilder.Entity("GymRoute.DataAccess.Entities.MemberShip", b =>
                 {
                     b.HasOne("GymRoute.DataAccess.Entities.Member", "Member")
-                        .WithMany()
+                        .WithMany("Memberships")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -495,8 +505,11 @@ namespace GymRoute.DataAccess.Migrations
 
             modelBuilder.Entity("GymRoute.DataAccess.Entities.Member", b =>
                 {
-                    b.Navigation("HealthRecord")
-                        .IsRequired();
+                    b.Navigation("Bookings");
+
+                    b.Navigation("HealthRecord");
+
+                    b.Navigation("Memberships");
                 });
 
             modelBuilder.Entity("GymRoute.DataAccess.Entities.Trainer", b =>

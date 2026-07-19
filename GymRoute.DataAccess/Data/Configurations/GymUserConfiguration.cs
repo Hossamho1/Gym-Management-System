@@ -17,7 +17,7 @@ namespace GymRoute.DataAccess.Data.Configurations
             builder.Property(p => p.Email)
                 .HasMaxLength(100);
 
-            builder.Property(p => p.phone)
+            builder.Property(p => p.Phone)
                 .HasMaxLength(20);
 
             builder.OwnsOne<Address>(gu => gu.Address, tp =>

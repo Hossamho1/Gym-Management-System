@@ -3,7 +3,7 @@
 
 <div class="container">
     <main role="main" class="pb-3">
-
+        <partial name="_TempDataAlert" />
 
 
         <div class="container">
@@ -49,7 +49,7 @@
                                             <ul class="dropdown-menu dropdown-menu-start"
                                                 aria-labelledby="dropdownMenuButton-member.Id">
                                                 <li>
-                                                    <a asp-controller="Member" asp-action="MemberDetails" asp-route-id="@member.Id"
+                                                    <a asp-controller="Member" asp-action="Details" asp-route-id="@member.Id"
                                                        class="dropdown-item d-flex align-items-center gap-3">
                                                         <img src="~/images/info 1.jpg" alt="info icon"
                                                         style="width: 20px; height: 20px;" />
@@ -57,7 +57,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a asp-controller="Member" asp-action="HealthRecordDetails" asp-route-id="@member.Id"
+                                                    <a asp-controller="Member" asp-action="HealthRecord" asp-route-id="@member.Id"
                                                        class="dropdown-item d-flex align-items-center gap-3">
                                                         <img src="~/images/info 1.jpg" alt="info icon"
                                                         style="width: 20px; height: 20px;" />
@@ -68,7 +68,7 @@
                                                     <hr class="dropdown-divider">
                                                 </li>
                                                 <li>
-                                                    <a asp-controller="Member" asp-action="EditMember" asp-route-id="@member.Id"
+                                                    <a asp-controller="Member" asp-action="Edit" asp-route-id="@member.Id"
                                                        class="dropdown-item d-flex align-items-center gap-3">
                                                         <img src="~/images/edit.jpg" alt="edit icon"
                                                         style="width: 20px; height: 20px;" />

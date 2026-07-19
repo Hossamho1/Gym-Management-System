@@ -23,6 +23,11 @@ namespace GymRoute.DataAccess.Migrations
                 table: "Users",
                 newName: "Phone");
 
+            migrationBuilder.RenameIndex(
+                name: "IX_Users_Email_phone",
+                table: "Users",
+                newName: "IX_Users_Email_Phone");
+
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
                 table: "Users",
@@ -60,6 +65,11 @@ namespace GymRoute.DataAccess.Migrations
                 name: "Phone",
                 table: "Users",
                 newName: "phone");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Users_Email_Phone",
+                table: "Users",
+                newName: "IX_Users_Email_phone");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",

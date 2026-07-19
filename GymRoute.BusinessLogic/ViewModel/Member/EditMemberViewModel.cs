@@ -1,12 +1,15 @@
 ﻿using GymRoute.BusinessLogic.ViewModel.HealthRecord;
-using GymRoute.DataAccess.EnumGender;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace GymRoute.BusinessLogic.ViewModel.Member;
-public class CreateMemberViewModel
+
+public class EditMemberViewModel
 {
-    [Required(ErrorMessage = "Name Is Required")]
-    [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces")]
+    public int Id { get; set; }
+    public string? PhotoUrl { get; set; } 
     public string Name { get; set; } = default!;
 
     [Required(ErrorMessage = "Email Is Required")]
@@ -41,7 +44,4 @@ public class CreateMemberViewModel
     [StringLength(150, MinimumLength = 2, ErrorMessage = "Street must be between 2 and 150 characters")]
     [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "Street can only contain letters, numbers, and spaces")]
     public string Street { get; set; } = default!;
-
-    [Required(ErrorMessage = "Health record is required")]
-    public CreateHealthRecordViewModel HealthRecordViewModel { get; set; } = default!;
 }

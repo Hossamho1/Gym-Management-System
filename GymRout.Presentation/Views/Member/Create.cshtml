@@ -5,6 +5,7 @@
 @model CreateMemberViewModel
 
 <div class="page member-create-page mt-4 mb-5">
+
     <header class="mb-4">
         <a asp-controller="Member" asp-action="Index" class="member-create-back text-decoration-none d-inline-flex align-items-center gap-2 mb-3">
             <i class="bi bi-arrow-left"></i>
@@ -170,6 +171,9 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <partial name="_AlertDismissScript" />
+ 
+
     <script>
         (function () {
             'use strict';

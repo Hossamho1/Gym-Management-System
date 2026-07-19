@@ -24,8 +24,9 @@ public class MemberShipConfiguration : IEntityTypeConfiguration<MemberShip>
 
 
         builder.HasOne(x => x.Member)
-               .WithMany() 
+               .WithMany(m => m.Memberships)
                .HasForeignKey(x => x.MemberId)
+               .IsRequired()
                .OnDelete(DeleteBehavior.Restrict); 
 
       
