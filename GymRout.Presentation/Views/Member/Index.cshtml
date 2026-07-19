@@ -1,126 +1,153 @@
 ﻿@using GymRoute.BusinessLogic.ViewModel.Member
 @model IEnumerable<MemberIndexViewModel>
 
+<link rel="stylesheet" href="~/css/members.css" />
+
 <div class="container">
     <main role="main" class="pb-3">
         <partial name="_TempDataAlert" />
 
-
-        <div class="container">
-            <header class="d-flex justify-content-end mt-5 mb-4 align-items-center">
-                <a asp-controller="Member" asp-action="Create" class="btn btn-fill fw-medium rounded-pill px-3 py-3"> + Add Member </a>
-            </header>
-            @if (Model.Any())
-            {
-            <div class="table-responsive " style="overflow: visible;">
-                <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <th><span>Photo</span></th>
-                            <th><span>Name</span></th>
-                            <th><span>Email</span></th>
-                            <th><span>Gender</span></th>
-                            <th><span>Phone</span></th>
-                            <th><span>Action</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            @foreach (var member in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        <span class="avatar">
-                                            <img src="@(String.IsNullOrWhiteSpace(member.PhotoUrl) ?("~/images/User.jpg") : member.PhotoUrl)" alt="Default Avatar" class="rounded-circle"
-                                            style="width: 40px; height: 40px;" />
-                                        </span>
-                                    </td>
-                                    <td><span>@member.Name</span></td>
-                                    <td><span>@member.Email</span></td>
-                                    <td><span>@member.Gender</span></td>
-                                    <td><span>@member.Phone</span></td>
-                                    <td class="action position-relative">
-                                        <div class="dropdown">
-                                            <button class="btn btn-link p-0 border-0" type="button"
-                                            id="dropdownMenuButton-member.Id" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                                <img src="~/images/action dots.jpg" alt="action icon" />
-                                            </button>
-
-                                            <ul class="dropdown-menu dropdown-menu-start"
-                                                aria-labelledby="dropdownMenuButton-member.Id">
-                                                <li>
-                                                    <a asp-controller="Member" asp-action="Details" asp-route-id="@member.Id"
-                                                       class="dropdown-item d-flex align-items-center gap-3">
-                                                        <img src="~/images/info 1.jpg" alt="info icon"
-                                                        style="width: 20px; height: 20px;" />
-                                                        <span>View Member Data</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="Member" asp-action="HealthRecord" asp-route-id="@member.Id"
-                                                       class="dropdown-item d-flex align-items-center gap-3">
-                                                        <img src="~/images/info 1.jpg" alt="info icon"
-                                                        style="width: 20px; height: 20px;" />
-                                                        <span>View Health Record Data</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="Member" asp-action="Edit" asp-route-id="@member.Id"
-                                                       class="dropdown-item d-flex align-items-center gap-3">
-                                                        <img src="~/images/edit.jpg" alt="edit icon"
-                                                        style="width: 20px; height: 20px;" />
-                                                        <span>Edit Member Data</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="Member" asp-action="Delete" asp-route-id="@member.Id"
-                                                       class="dropdown-item d-flex align-items-center gap-3 text-danger">
-                                                        <img src="~/images/x-circle 1.jpg" alt="delete icon"
-                                                        style="width: 20px; height: 20px;" />
-                                                        <span>Delete</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-
-
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+        <div class="members-top">
+            <div class="search-row">
+                <div class="input-group search-input">
+                    <span class="input-group-text bg-transparent border-0 search-icon"><i class="bi bi-search"></i></span>
+                    <input id="searchName" type="search" class="form-control border-0" placeholder="Search by name" />
                 </div>
-            }
-                            else
-            {
-                @* Show Message if No Members Available *@
-                <div class="text-center py-5">
-                <i class="bi bi-person-workspace display-1 text-muted"></i>
-                <h4 class="mt-3 text-muted">No Members Available</h4>
-                <p class="text-muted">Add your first Member to get started</p>
+                <div class="input-group search-input">
+                    <span class="input-group-text bg-transparent border-0 search-icon"><i class="bi bi-envelope"></i></span>
+                    <input id="searchEmail" type="search" class="form-control border-0" placeholder="Search by email" />
+                </div>
+                <div class="input-group search-input">
+                    <span class="input-group-text bg-transparent border-0 search-icon"><i class="bi bi-telephone"></i></span>
+                    <input id="searchPhone" type="search" class="form-control border-0" placeholder="Search by phone" />
+                </div>
             </div>
-            }
+
+            <div>
+                <a asp-controller="Member" asp-action="Create" class="gym-btn gym-btn--primary">
+                    <i class="bi bi-plus-circle" aria-hidden="true"></i>
+                    Add Member
+                </a>
+            </div>
         </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="members-grid" id="membersGrid">
+                @foreach (var member in Model)
+                {
+                    <div class="member-card" data-name="@member.Name" data-email="@member.Email" data-phone="@member.Phone">
+                        <div class="member-avatar">
+                            <img src="@(String.IsNullOrWhiteSpace(member.PhotoUrl) ? Url.Content("~/images/User.jpg") : member.PhotoUrl)" alt="@member.Name" />
+                        </div>
+                        <div class="member-info">
+                            <p class="member-name">@member.Name</p>
+                            <div class="member-meta">
+                                <span>@member.Email</span> &middot; <span>@member.Phone</span>
+                            </div>
+                        </div>
+                        <div class="me-2">
+                            @if (member.Gender?.ToLower() == "male")
+                            {
+                                <span class="gender-badge gender-male">Male</span>
+                            }
+                            else if (member.Gender?.ToLower() == "female")
+                            {
+                                <span class="gender-badge gender-female">Female</span>
+                            }
+                            else
+                            {
+                                <span class="gender-badge gender-other">@member.Gender</span>
+                            }
+                        </div>
+                        <div class="action-menu">
+                            <div class="dropdown action-dropdown">
+                                <button class="btn action-btn dropdown-toggle" type="button" id="actionMenu-@member.Id" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="actionMenu-@member.Id">
+                                    <li>
+                                        <a asp-controller="Member" asp-action="Details" asp-route-id="@member.Id" class="dropdown-item d-flex align-items-center">
+                                            <i class="bi bi-eye action-icon"></i>
+                                            View Member
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Member" asp-action="HealthRecord" asp-route-id="@member.Id" class="dropdown-item d-flex align-items-center">
+                                            <i class="bi bi-heart-pulse action-icon text-success"></i>
+                                            Health Record
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Member" asp-action="Edit" asp-route-id="@member.Id" class="dropdown-item d-flex align-items-center text-primary">
+                                            <i class="bi bi-pencil-square action-icon text-primary"></i>
+                                            Edit Member
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider" />
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Member" asp-action="Delete" asp-route-id="@member.Id" class="dropdown-item d-flex align-items-center action-delete">
+                                            <i class="bi bi-trash action-icon action-delete"></i>
+                                            Delete
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <img src="~/images/empty_members.svg" alt="No members" />
+                <h3 class="mt-3">No Members Found</h3>
+                <p class="text-muted">Start adding members to see them here.</p>
+                <a asp-controller="Member" asp-action="Create" class="members-cta mt-3"> <i class="bi bi-plus-circle"></i> Add Member</a>
+            </div>
+        }
     </main>
 </div>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const alertBox = document.getElementById("Alert");
+    document.addEventListener('DOMContentLoaded', function () {
+        // Auto dismiss tempdata alerts after 4 seconds
+        const alertBox = document.getElementById('alert') || document.getElementById('Alert');
         if (alertBox) {
             setTimeout(() => {
-                alertBox.style.transition = "opacity 0.5s ease";
-                alertBox.style.opacity = "0";
+                alertBox.style.transition = 'opacity 0.45s ease';
+                alertBox.style.opacity = '0';
                 setTimeout(() => alertBox.remove(), 500);
-            }, 1500);
+            }, 4000);
+        }
+
+        // Client-side simple filtering to improve UX (does not change server behavior)
+        const grid = document.getElementById('membersGrid');
+        if (!grid) return;
+
+        const inputs = ['searchName', 'searchEmail', 'searchPhone'].map(id => document.getElementById(id));
+        inputs.forEach(input => input && input.addEventListener('input', filterMembers));
+
+        function filterMembers() {
+            const name = document.getElementById('searchName').value.trim().toLowerCase();
+            const email = document.getElementById('searchEmail').value.trim().toLowerCase();
+            const phone = document.getElementById('searchPhone').value.trim().toLowerCase();
+
+            Array.from(grid.children).forEach(card => {
+                const n = (card.getAttribute('data-name') || '').toLowerCase();
+                const e = (card.getAttribute('data-email') || '').toLowerCase();
+                const p = (card.getAttribute('data-phone') || '').toLowerCase();
+
+                const match = (!name || n.includes(name)) && (!email || e.includes(email)) && (!phone || p.includes(phone));
+                card.style.display = match ? '' : 'none';
+            });
         }
     });
 </script>
+
 <script src="../js/bootstrap.bundle.min.js"></script>
 
 @section Scripts {
